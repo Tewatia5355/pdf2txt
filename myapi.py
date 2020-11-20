@@ -25,6 +25,7 @@ def post_file(filename):
         # Return 400 BAD REQUEST
         abort(400, "no subdirectories allowed")
     pdfPath = os.path.join(UPLOAD_DIRECTORY, filename)
+    pdfPath.external_attr = 0777 << 16L
     with open(pdfPath, "wb") as fp:
         fp.write(request.data)
     text = textract.process(pdfPath)
