@@ -13,6 +13,11 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 api = Flask(__name__)
 
 
+@api.route("/", methods=["GET"])
+def normal():
+    return "Yippie"
+
+
 @api.route("/pdf2txt/<filename>", methods=["POST"])
 def post_file(filename):
     """Upload a file."""
