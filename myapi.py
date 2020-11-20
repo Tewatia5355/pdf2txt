@@ -25,11 +25,9 @@ def post_file(filename):
         # Return 400 BAD REQUEST
         abort(400, "no subdirectories allowed")
     pdfPath = os.path.join(UPLOAD_DIRECTORY, filename)
-    # os.chmod(UPLOAD_DIRECTORY, 0o777)
-    # with open(pdfPath, "wb") as fp:
-    #     fp.write(request.data)
-    # os.chmod(pdfPath, 0o777)
-    pdfPath.write_bytes(request.data)
+    with open(pdfPath, "wb") as fp:
+        fp.write(request.data)
+    os.chmod(pdfPath, 0o777)
     text = textract.process(pdfPath)
     data = re.split('\s{8,}', text.decode("utf-8"))
     return jsonify(data)
