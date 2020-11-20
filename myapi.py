@@ -31,6 +31,13 @@ def post_file(filename):
     data = re.split('\s{8,}', text.decode("utf-8"))
     return jsonify(data)
 
+# app name
+
+
+@api.errorhandler(404)
+def not_found(e):
+    return "error yaar"
+
 
 if __name__ == "__main__":
     api.run(debug=True, port=8000)
