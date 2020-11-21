@@ -36,9 +36,7 @@ def post_file():
     text = textract.process(pdfPath)
     data = re.split('\s{8,}', text.decode("utf-8"))
     datt = '\n'.join(data)
-    urls = re.findall(
-        'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', datt)
-    resp = jsonify({"pdfData": datt, "url": [x[0] for x in urls]})
+    resp = jsonify({"pdfData": datt, "message": "SUCCESS"})
     resp.status_code = 200
     return resp
     # return jsonify(datt)
