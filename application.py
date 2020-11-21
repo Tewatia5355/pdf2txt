@@ -29,7 +29,6 @@ def post_file():
     # print(request)
     filename = secure_filename(file.filename)
     if "/" in filename:
-        # Return 400 BAD REQUEST
         abort(400, "no subdirectories allowed")
 
     pdfPath = os.path.join(UPLOAD_DIRECTORY, filename)
