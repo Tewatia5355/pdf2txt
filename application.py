@@ -26,7 +26,7 @@ def post_file():
     """Upload a file."""
 
     file = request.files['file']
-    print(request)
+    # print(request)
     filename = secure_filename(file.filename)
     if "/" in filename:
         # Return 400 BAD REQUEST
