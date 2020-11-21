@@ -3,6 +3,8 @@ import re
 import textract
 from flask import Flask, request, abort, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
+from flask_cors import CORS
+
 
 UPLOAD_DIRECTORY = "/tmp"
 
@@ -11,6 +13,7 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 
 
 application = Flask(__name__)
+cors = CORS(application)
 
 
 @application.route("/", methods=["GET"])
@@ -22,10 +25,8 @@ def normal():
 def post_file():
     """Upload a file."""
 
-    # pdfPath = os.path.join(UPLOAD_DIRECTORY, filename)
-    # with open(pdfPath, "wb") as fp:
-    #     fp.write(request.data)
     file = request.files['file']
+    print(request)
     filename = secure_filename(file.filename)
     if "/" in filename:
         # Return 400 BAD REQUEST
@@ -35,14 +36,15 @@ def post_file():
     file.save(pdfPath)
     text = textract.process(pdfPath)
     data = re.split('\s{8,}', text.decode("utf-8"))
-    return jsonify(data)
+    datt = '\n'.join(data)
+    return jsonify(datt)
 
 # app name
 
 
 @application.errorhandler(404)
 def not_found(e):
-    return "error yaar"
+    return e.message
 
 
 if __name__ == "__main__":
