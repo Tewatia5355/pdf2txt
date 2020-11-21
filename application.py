@@ -13,8 +13,8 @@ if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
 
 
-def vectorize(Text): return TfidfVectorizer().fit_transform(Text).toarray()
-def similarity(doc1, doc2): return cosine_similarity([doc1, doc2])
+# def vectorize(Text): return 
+# def similarity(doc1, doc2): return cosine_similarity([doc1, doc2])
 
 
 plagiarism_results = set()
@@ -22,7 +22,7 @@ vectors = None
 
 def check_plagiarism():
     global vectors
-    sim_score = similarity(vectors[0],vectors[1])[0][1]
+    sim_score = cosine_similarity([vectors[0], vectors[1]])[0][1] 
     score = sim_score*100
     plagiarism_results.add(score)
     return plagiarism_results
@@ -49,10 +49,10 @@ def plag_check():
     tf1.close()
     tf2.close()
     student_notes = [open(File).read() for File in file]
-    vectors = vectorize(student_notes)
-    print(vectors)
-    ans = list(check_plagiarism())
-    return jsonify(ans)
+    vectors = TfidfVectorizer().fit_transform(student_notes).toarray()
+    sim_score = cosine_similarity([vectors[0], vectors[1]])[0][1] 
+    score = sim_score*100
+    return jsonify(score)
 
 @application.route("/pdf2txt/", methods=["POST"])
 def post_file():
