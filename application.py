@@ -4,7 +4,8 @@ import textract
 from flask import Flask, request, abort, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
-
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 UPLOAD_DIRECTORY = "/tmp"
 
