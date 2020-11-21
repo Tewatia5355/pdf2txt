@@ -42,7 +42,7 @@ def normal():
     return "Yippie"
 
 @application.route("/plag/", methods=["POST"])
-def post_file():
+def plag_check():
     """Upload a file."""
     global s_vectors
     file = request.form['myarray']
