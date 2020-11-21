@@ -37,7 +37,12 @@ def post_file():
     text = textract.process(pdfPath)
     data = re.split('\s{8,}', text.decode("utf-8"))
     datt = '\n'.join(data)
-    return jsonify(datt)
+    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+    url = re.findall(regex, string)
+    resp = jsonify({"pdfData": datt, "url": [x[0] for x in url]})
+    resp.status_code = 200
+    return resp
+    # return jsonify(datt)
 
 # app name
 
