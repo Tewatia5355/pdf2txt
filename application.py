@@ -49,7 +49,7 @@ def normal():
 @application.route("/plag/", methods=["POST"])
 def plag_check():
     """Upload a file."""
-   global s_vectors
+    global s_vectors
     file = request.form['myarray']
     tf1, tf2 = open("./tmp/t1.txt", "w"), open("./tmp/t2.txt", "w")
     file = ["./tmp/t1.txt", "./tmp/t2.txt"]
