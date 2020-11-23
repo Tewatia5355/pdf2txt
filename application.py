@@ -19,17 +19,18 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 
 # def vectorize(Text): return TfidfVectorizer().fit_transform(Text).toarray()
 # def similarity(doc1, doc2): return cosine_similarity([doc1, doc2])
+def vectorize(Text): return TfidfVectorizer().fit_transform(Text).toarray()
+def similarity(doc1, doc2): return cosine_similarity([doc1, doc2])
 
 
 plagiarism_results = set()
+s_vectors = []
 
 
 def check_plagiarism():
     global s_vectors
-    def vectorize(Text): return TfidfVectorizer().fit_transform(Text).toarray()
-    def similarity(doc1, doc2): return cosine_similarity([doc1, doc2])
     for student_a, text_vector_a in s_vectors:
-        new_vectors = s_vectors.copy()
+        new_vectors = s_vectors
         current_index = new_vectors.index((student_a, text_vector_a))
         del new_vectors[current_index]
         for student_b, text_vector_b in new_vectors:
@@ -61,9 +62,7 @@ def plag_check():
     tf1.close()
     tf2.close()
 
-    def vectorize(Text): return TfidfVectorizer().fit_transform(Text).toarray()
-    def similarity(doc1, doc2): return cosine_similarity([doc1, doc2])
-    student_files = [doc for doc in os.listdir() if doc.endswith('.txt')]
+    # student_files = [doc for doc in os.listdir() if doc.endswith('.txt')]
     # student_notes =[open(File).read() for File in  student_files]
 
     # vectors = vectorize(student_notes)
