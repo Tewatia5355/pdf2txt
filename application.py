@@ -28,9 +28,9 @@ def plag_check():
     global vectors
     file = request.form['myarray']
     tf1, tf2 = open("./tmp/t1.txt", "w"), open("./tmp/t2.txt", "w")
-    file = ["./tmp/t1.txt", "./tmp/t2.txt"]
     tf1.write(file[0])
     tf2.write(file[1])
+    file = ["./tmp/t1.txt", "./tmp/t2.txt"]
     tf1.close()
     tf2.close()
     student_notes = [open(File).read() for File in file]
