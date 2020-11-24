@@ -25,7 +25,7 @@ def plag_check():
     """Upload a file."""
 
     global vectors
-    file = request.form['myarray']
+    file = [request.form['key1'], request.form['key2']]
     tf1, tf2 = open("./tmp/t1.txt", "w"), open("./tmp/t2.txt", "w")
     tf1.write(file[0])
     tf2.write(file[1])
