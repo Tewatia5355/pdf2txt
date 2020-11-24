@@ -6,40 +6,11 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
+import plag_helper
 UPLOAD_DIRECTORY = "/tmp"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
-
-
-# def vectorize(Text): return
-# def similarity(doc1, doc2): return cosine_similarity([doc1, doc2])
-
-
-# def vectorize(Text): return TfidfVectorizer().fit_transform(Text).toarray()
-# def similarity(doc1, doc2): return cosine_similarity([doc1, doc2])
-def vectorize(Text): return TfidfVectorizer().fit_transform(Text).toarray()
-def similarity(doc1, doc2): return cosine_similarity([doc1, doc2])
-
-
-plagiarism_results = set()
-s_vectors = []
-
-
-def check_plagiarism():
-    global s_vectors
-    for student_a, text_vector_a in s_vectors:
-        new_vectors = s_vectors
-        current_index = new_vectors.index((student_a, text_vector_a))
-        del new_vectors[current_index]
-        for student_b, text_vector_b in new_vectors:
-            sim_score = similarity(text_vector_a, text_vector_b)[0][1]
-            student_pair = sorted((student_a, student_b))
-            score = (student_pair[0], student_pair[1], sim_score)
-            plagiarism_results.add(score)
-    return plagiarism_results
-
 
 application = Flask(__name__)
 cors = CORS(application)
@@ -53,7 +24,8 @@ def normal():
 @application.route("/plag/", methods=["POST"])
 def plag_check():
     """Upload a file."""
-    global s_vectors
+
+    global vectors
     file = request.form['myarray']
     tf1, tf2 = open("./tmp/t1.txt", "w"), open("./tmp/t2.txt", "w")
     file = ["./tmp/t1.txt", "./tmp/t2.txt"]
@@ -61,17 +33,11 @@ def plag_check():
     tf2.write(file[1])
     tf1.close()
     tf2.close()
-
-    # student_files = [doc for doc in os.listdir() if doc.endswith('.txt')]
-    # student_notes =[open(File).read() for File in  student_files]
-
-    # vectors = vectorize(student_notes)
-
     student_notes = [open(File).read() for File in file]
-    vectors = vectorize(student_notes)
-    s_vectors = list(zip(file, vectors))
-    ans = list(check_plagiarism())
-    return jsonify(ans)
+    vectors = TfidfVectorizer().fit_transform(student_notes).toarray()
+    sim_score = cosine_similarity([vectors[0], vectors[1]])[0][1]
+    score = sim_score*100
+    return jsonify(score)
 
 
 @application.route("/pdf2txt/", methods=["POST"])

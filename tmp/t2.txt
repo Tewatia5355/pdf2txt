@@ -1,1 +1,1 @@
-./tmp/t2.txt
+abcd
