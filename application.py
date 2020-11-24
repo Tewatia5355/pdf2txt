@@ -6,7 +6,6 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import plag_helper
 UPLOAD_DIRECTORY = "/tmp"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
