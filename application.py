@@ -37,10 +37,8 @@ def post_file():
     file.save(pdfPath)
     text = textract.process(pdfPath)
     data = re.split('\s{8,}', text.decode("utf-8"))
-    datt = '\n'.join(data)
+    datt = '\n'.join(data).encode('utf8')
     resp = extract_module(datt)
-    for x in resp:
-        x = x.encode('utf8')
     print(resp)
     return jsonify(plag_check(linkedin_comp, resp))
 

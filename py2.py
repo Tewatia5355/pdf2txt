@@ -38,6 +38,7 @@ def extract_module(ResumeText):
     for subList in Sections:
         string = " "
         STRING = string.join(subList)
+        STRING = STRING.encode('utf8')
         sectionString.append(STRING)
 
     return sectionString
