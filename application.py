@@ -28,6 +28,7 @@ def post_file():
     file = request.files['file']
     linkedin_comp = [request.form['skill'],
                      request.form['work'], request.form['edu']]
+    print(linkedin_comp)
     filename = secure_filename(file.filename)
     if "/" in filename:
         abort(400, "no subdirectories allowed")
