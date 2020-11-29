@@ -15,6 +15,7 @@ def extract_module(ResumeText):
         ['skills', 'abilities'],
         ['WORK', 'experience'],
         'education',
+        'achievements'
     ]
 
     newText = []

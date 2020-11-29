@@ -26,8 +26,8 @@ def post_file():
     """Upload a file."""
 
     file = request.files['file']
-    linkedin_comp = [request.form['skill'].encode('utf8'),
-                     request.form['work'].encode('utf8'), request.form['edu'].encode('utf8')]
+    linkedin_comp = [request.form['skill'].encode('utf8').lower(),
+                     request.form['work'].encode('utf8').lower(), request.form['edu'].encode('utf8').lower()]
     print(linkedin_comp)
     filename = secure_filename(file.filename)
     if "/" in filename:
@@ -37,7 +37,7 @@ def post_file():
     file.save(pdfPath)
     text = textract.process(pdfPath)
     data = re.split('\s{8,}', text.decode("utf-8"))
-    datt = '\n'.join(data).encode('utf8')
+    datt = '\n'.join(data).encode('utf8').lower()
     resp = extract_module(datt)
     print(resp)
     return jsonify(plag_check(linkedin_comp, resp))
