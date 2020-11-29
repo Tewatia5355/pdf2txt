@@ -36,9 +36,6 @@ def extract_module(ResumeText):
     sectionString = []
 
     for subList in Sections:
-        print(subList)
-
-    for subList in Sections:
         string = " "
         STRING = string.join(subList)
         sectionString.append(STRING)

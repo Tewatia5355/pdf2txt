@@ -39,6 +39,7 @@ def post_file():
     data = re.split('\s{8,}', text.decode("utf-8"))
     datt = '\n'.join(data)
     resp = extract_module(datt)
+    print(resp)
     return jsonify(plag_check(linkedin_comp, resp))
 
 # app name
