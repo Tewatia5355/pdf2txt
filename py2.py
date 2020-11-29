@@ -2,7 +2,7 @@ import os
 import re
 import textract
 import random
-from imp import cvAuth
+from imptt import cvAuth
 from flask import Flask, request, abort, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
@@ -47,7 +47,6 @@ def extract_module(ResumeText):
 
 
 def plag_check(linkedin, respp):
-    ans = 0
     d1 = '\n'.join(respp).lower()
     d2 = '\n'.join(linkedin).lower()
     # for i in range(3):
