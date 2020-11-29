@@ -26,8 +26,8 @@ def post_file():
     """Upload a file."""
 
     file = request.files['file']
-    linkedin_comp = [request.form['skill'],
-                     request.form['work'], request.form['edu']]
+    linkedin_comp = [request.form['skill'].encode('utf8'),
+                     request.form['work'].encode('utf8'), request.form['edu'].encode('utf8')]
     print(linkedin_comp)
     filename = secure_filename(file.filename)
     if "/" in filename:
