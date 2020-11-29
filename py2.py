@@ -46,15 +46,17 @@ def extract_module(ResumeText):
 
 def plag_check(linkedin, respp):
     ans = 0
-    for i in range(3):
-        tf1, tf2 = open("./tmp/t1.txt", "w"), open("./tmp/t2.txt", "w")
-        tf1.write(linkedin[i])
-        tf2.write(respp[i])
-        file = ["./tmp/t1.txt", "./tmp/t2.txt"]
-        tf1.close()
-        tf2.close()
-        student_notes = [open(File).read() for File in file]
-        vectors = TfidfVectorizer().fit_transform(student_notes).toarray()
-        sim_score = cosine_similarity([vectors[0], vectors[1]])[0][1]
-        ans = ans + sim_score*100
-    return ans/3
+    d1 = '\n'.join(respp).encode('utf8').lower()
+    d2 = '\n'.join(linkedin).encode('utf8').lower()
+    # for i in range(3):
+    tf1, tf2 = open("./tmp/t1.txt", "w"), open("./tmp/t2.txt", "w")
+    tf1.write(d1)
+    tf2.write(d2)
+    file = ["./tmp/t1.txt", "./tmp/t2.txt"]
+    tf1.close()
+    tf2.close()
+    student_notes = [open(File).read() for File in file]
+    vectors = TfidfVectorizer().fit_transform(student_notes).toarray()
+    sim_score = cosine_similarity([vectors[0], vectors[1]])[0][1]
+    # ans = ans + sim_score*100
+    return sim_score*100
