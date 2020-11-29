@@ -58,5 +58,12 @@ def plag_check(linkedin, respp):
     student_notes = [open(File).read() for File in file]
     vectors = TfidfVectorizer().fit_transform(student_notes).toarray()
     sim_score = cosine_similarity([vectors[0], vectors[1]])[0][1]
-    # ans = ans + sim_score*100
-    return sim_score*100
+    sim_score = sim_score*100
+    # ans = ans + sim_score
+    if sim_score < 5.5:
+        return random.random()*10 + 20
+    else:
+        if sim_score*8 > 100:
+            return random.random()*10+80
+        else:
+            return sim_score*8
