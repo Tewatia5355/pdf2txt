@@ -2,6 +2,7 @@ import os
 import re
 import textract
 import random
+from imp import cvAuth
 from flask import Flask, request, abort, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
@@ -61,10 +62,4 @@ def plag_check(linkedin, respp):
     sim_score = cosine_similarity([vectors[0], vectors[1]])[0][1]
     sim_score = sim_score*100
     # ans = ans + sim_score
-    if sim_score < 5.5:
-        return random.random()*10 + 20
-    else:
-        if sim_score*8 > 100:
-            return random.random()*10+80
-        else:
-            return sim_score*8
+    return cvAuth(sim_score)
