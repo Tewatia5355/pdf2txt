@@ -12,10 +12,9 @@ def extract_module(ResumeText):
     ResumeTextLis = ResumeText.split()
 
     sections = [
-        'SKILLS',
-        'WORK',
-        'EDUCATION',
-        'ACHIEVEMENTS'
+        ['skills', 'abilities'],
+        ['WORK', 'experience'],
+        'education',
     ]
 
     newText = []
@@ -25,9 +24,9 @@ def extract_module(ResumeText):
         for word in ResumeTextLis:
             if flag:
                 newText.append(word)
-            if word == sections[i]:
+            if word in sections[i]:
                 flag = True
-            elif word == sections[i+1]:
+            elif word in sections[i+1]:
                 flag = False
         flag = False
         Sections.append(newText)
