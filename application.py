@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from py2 import extract_module, plag_check
 UPLOAD_DIRECTORY = "/tmp"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
@@ -20,31 +21,13 @@ def normal():
     return "Yippie"
 
 
-@application.route("/plag/", methods=["POST"])
-def plag_check():
-    """Upload a file."""
-
-    global vectors
-    file = [request.form['key1'], request.form['key2']]
-    tf1, tf2 = open("./tmp/t1.txt", "w"), open("./tmp/t2.txt", "w")
-    tf1.write(file[0])
-    tf2.write(file[1])
-    file = ["./tmp/t1.txt", "./tmp/t2.txt"]
-    tf1.close()
-    tf2.close()
-    student_notes = [open(File).read() for File in file]
-    vectors = TfidfVectorizer().fit_transform(student_notes).toarray()
-    sim_score = cosine_similarity([vectors[0], vectors[1]])[0][1]
-    score = sim_score*100
-    return jsonify(score)
-
-
 @application.route("/pdf2txt/", methods=["POST"])
 def post_file():
     """Upload a file."""
 
     file = request.files['file']
-    # print(request)
+    linkedin_comp = [request.form['skill'],
+                     request.form['work'], request.form['edu']]
     filename = secure_filename(file.filename)
     if "/" in filename:
         abort(400, "no subdirectories allowed")
@@ -54,10 +37,8 @@ def post_file():
     text = textract.process(pdfPath)
     data = re.split('\s{8,}', text.decode("utf-8"))
     datt = '\n'.join(data)
-    resp = jsonify({"pdfData": datt, "message": "SUCCESS"})
-    resp.status_code = 200
-    return resp
-    # return jsonify(datt)
+    resp = extract_module(datt)
+    return jsonify(plag_check(linkedin_comp, resp))
 
 # app name
 
