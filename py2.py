@@ -60,5 +60,4 @@ def plag_check(linkedin, respp):
     vectors = TfidfVectorizer().fit_transform(student_notes).toarray()
     sim_score = cosine_similarity([vectors[0], vectors[1]])[0][1]
     sim_score = sim_score*100
-    # ans = ans + sim_score
     return cvAuth(sim_score)
