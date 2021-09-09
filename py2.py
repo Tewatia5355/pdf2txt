@@ -49,7 +49,7 @@ def extract_module(ResumeText):
 
 def plag_check(linkedin, respp):
     d1 = '\n'.join(respp).lower()
-    d2 = '\n'.join(linkedin).lower()
+    d2 = '\n'.join(linkedin.decode("utf-8")).lower()
     # for i in range(3):
     tf1, tf2 = open("./tmp/t1.txt", "w"), open("./tmp/t2.txt", "w")
     tf1.write(d1)
