@@ -25,6 +25,7 @@ def extract_module(ResumeText):
     flag = False
     for i in range(len(sections)-1):
         for word in ResumeTextLis:
+            word = word.decode("utf-8") 
             if flag:
                 newText.append(word)
             if word in sections[i]:
