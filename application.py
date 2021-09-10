@@ -10,7 +10,8 @@ from flask_cors import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from py2 import extract_module, plag_check
-from scrape_linkedin import ProfileScraper
+from linkedin_scraper import Person, actions
+from selenium import webdriver
 UPLOAD_DIRECTORY = "/tmp"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
@@ -62,10 +63,13 @@ def post_file():
 
 @application.route("/linkd/", methods=["GET"])
 def lkd():
-    usr = 'yash--kumar'
-    with ProfileScraper(cookie='AQEDATM5Ha0Ac3q4AAABe8_22-EAAAF79ANf4VYAZW1gInlgNDyjAPORliyIjxNgBcocZrlNaMu_4yWjq0y-KXW4ouJLeO3fmck8IvynfQg5ZgcftyPLlKXHwtMsOmRLOlSYcj_-9vzvc7VvQ1-czhoy') as scraper:
-        profile = scraper.scrape(user=usr)
-    return jsonify(profile.to_dict())
+    driver = webdriver.Chrome()
+    email = "sedummy1@gmail.com"
+    password = "sedummy!123"
+    # if email and password isnt given, it'll prompt in terminal
+    actions.login(driver, email, password)
+    person = Person("https://www.linkedin.com/in/yash--kumar", driver=driver)
+    print(person)
 
 
 @application.errorhandler(404)
