@@ -63,7 +63,7 @@ def post_file():
 @application.route("/linkd/", methods=["GET"])
 def lkd():
     usr = 'yash--kumar'
-    with ProfileScraper(cookie='AQEDATM0sxUC1TOnAAABe88zy98AAAF780BP300AoT83raQWijxqn9RSnvY0YzRW0MSm6CXgJi0mrEl4Dts2kZUDXjrEcsormzfL1L1QA1kwmEu_29ixKqoazfiIK1BmO0_o2qIKx0qQitzTj6Oy3sfI') as scraper:
+    with ProfileScraper(cookie='AQEDATM5Ha0Ac3q4AAABe8_22-EAAAF79ANf4VYAZW1gInlgNDyjAPORliyIjxNgBcocZrlNaMu_4yWjq0y-KXW4ouJLeO3fmck8IvynfQg5ZgcftyPLlKXHwtMsOmRLOlSYcj_-9vzvc7VvQ1-czhoy') as scraper:
         profile = scraper.scrape(user=usr)
     return jsonify(profile.to_dict())
 
