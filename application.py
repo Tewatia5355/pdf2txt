@@ -2,6 +2,8 @@ import os
 import re
 import textract
 import random
+import base64
+from github import Github
 from flask import Flask, request, abort, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
@@ -21,6 +23,15 @@ cors = CORS(application)
 def normal():
     return "Yippie"
 
+@application.route("/gitt/", methods=["POST"])
+def repoo():
+    username = "Tewatia5355"
+    g = Github()
+    user = g.get_user(username)
+    proj = []
+    for repo in user.get_repos():
+        proj.append(repo.name)
+    return jsonify(proj)
 
 @application.route("/pdf2txt/", methods=["POST"])
 def post_file():
