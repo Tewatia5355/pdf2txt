@@ -10,6 +10,7 @@ from flask_cors import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from py2 import extract_module, plag_check
+from scrape_linkedin import ProfileScraper
 UPLOAD_DIRECTORY = "/tmp"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
@@ -23,7 +24,8 @@ cors = CORS(application)
 def normal():
     return "Yippie"
 
-@application.route("/gitt/", methods=["POST"])
+
+@application.route("/gitt/", methods=["GET"])
 def repoo():
     username = "Tewatia5355"
     g = Github()
@@ -32,6 +34,7 @@ def repoo():
     for repo in user.get_repos():
         proj.append(repo.name)
     return jsonify(proj)
+
 
 @application.route("/pdf2txt/", methods=["POST"])
 def post_file():
@@ -55,6 +58,14 @@ def post_file():
     return jsonify(plag_check(linkedin_comp, resp))
 
 # app name
+
+
+@application.route("/linkd/", methods=["GET"])
+def lkd():
+    usr = 'yash--kumar'
+    with ProfileScraper(cookie='AQEDATM0sxUC1TOnAAABe88zy98AAAF780BP300AoT83raQWijxqn9RSnvY0YzRW0MSm6CXgJi0mrEl4Dts2kZUDXjrEcsormzfL1L1QA1kwmEu_29ixKqoazfiIK1BmO0_o2qIKx0qQitzTj6Oy3sfI') as scraper:
+        profile = scraper.scrape(user='austinoboyle')
+    return jsonify(profile.to_dict())
 
 
 @application.errorhandler(404)
