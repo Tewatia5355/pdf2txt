@@ -26,9 +26,9 @@ def normal():
     return "Yippie"
 
 
-@application.route("/gitt/", methods=["GET"])
+@application.route("/gitt/", methods=["POST"])
 def repoo():
-    username = "Tewatia5355"
+    username = list(request.values)[0]
     g = Github()
     user = g.get_user(username)
     proj = []
