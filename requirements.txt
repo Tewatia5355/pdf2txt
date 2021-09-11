@@ -30,6 +30,5 @@ XlsxWriter==1.3.7
 gunicorn==19.9.0
 flask-cors
 scikit-learn 
-scipy 
-matplotlib
+scipy
 PyGithub
