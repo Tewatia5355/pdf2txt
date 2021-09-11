@@ -59,19 +59,6 @@ def post_file():
     return jsonify(plag_check(linkedin_comp, resp))
 
 # app name
-
-
-@application.route("/linkd/", methods=["GET"])
-def lkd():
-    driver = webdriver.Chrome()
-    email = "sedummy1@gmail.com"
-    password = "sedummy!123"
-    # if email and password isnt given, it'll prompt in terminal
-    actions.login(driver, email, password)
-    person = Person("https://www.linkedin.com/in/yash--kumar", driver=driver)
-    print(person)
-
-
 @application.errorhandler(404)
 def not_found(e):
     return e
