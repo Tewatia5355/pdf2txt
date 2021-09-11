@@ -10,8 +10,6 @@ from flask_cors import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from py2 import extract_module, plag_check
-from linkedin_scraper import Person, actions
-from selenium import webdriver
 UPLOAD_DIRECTORY = "/tmp"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
